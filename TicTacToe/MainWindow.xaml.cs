@@ -21,6 +21,7 @@ namespace TicTacToe
     public partial class MainWindow : Window
     {
         GameLogic gameLogic = new GameLogic();
+        private bool botEnable = false;
 
         public MainWindow()
         {
@@ -32,6 +33,14 @@ namespace TicTacToe
             var space = (Button)sender;
             if (String.IsNullOrWhiteSpace(space.Content?.ToString()))
             {
+                if (gameLogic.CurrentPlayer == "O")
+                {
+                    space.Background = Brushes.Blue;
+                }
+                else
+                {
+                    space.Background = Brushes.Red;
+                }
                 space.Content = gameLogic.CurrentPlayer;
 
                 var coordinates = space.Tag.ToString().Split(',');
@@ -43,8 +52,59 @@ namespace TicTacToe
 
                 if (gameLogic.PlayerWin())
                 {
+                    if (gameLogic.CurrentPlayer == "O")
+                    {
+                        WinScreen.Foreground = Brushes.Blue;
+                    }
+                    else
+                    {
+                        WinScreen.Foreground = Brushes.Red;
+                    }
                     WinScreen.Text = $"{gameLogic.CurrentPlayer} ПОБЕЖДАЕТ";
                     WinScreen.Visibility = Visibility.Visible;
+                    return;
+                }
+
+                if (botEnable)
+                {
+                    gameLogic.SetNextPlayer();
+                    int rnd = new Random().Next(0, 8);
+                    while (!String.IsNullOrWhiteSpace(((Button)gameField.Children[rnd]).Content?.ToString()))
+                    {
+                        rnd = new Random().Next(0, 8);
+                    }
+
+                    if (gameLogic.CurrentPlayer == "O")
+                    {
+                        ((Button)gameField.Children[rnd]).Background = Brushes.Blue;
+                    }
+                    else
+                    {
+                        ((Button)gameField.Children[rnd]).Background = Brushes.Red;
+                    }
+
+                    ((Button)gameField.Children[rnd]).Content = gameLogic.CurrentPlayer;
+                    coordinates = ((Button)gameField.Children[rnd]).Tag.ToString().Split(',');
+                    xValue = int.Parse(coordinates[0]);
+                    yValue = int.Parse(coordinates[1]);
+
+                    buttonPosition = new Position() { x = xValue, y = yValue };
+                    gameLogic.UpdateBoard(buttonPosition, gameLogic.CurrentPlayer);
+                }
+
+                if (gameLogic.PlayerWin())
+                {
+                    if(gameLogic.CurrentPlayer == "O")
+                    {
+                        WinScreen.Foreground = Brushes.Blue;
+                    }
+                    else
+                    {
+                        WinScreen.Foreground = Brushes.Red;
+                    }
+                    WinScreen.Text = $"{gameLogic.CurrentPlayer} ПОБЕЖДАЕТ";
+                    WinScreen.Visibility = Visibility.Visible;
+                    return;
                 }
                 gameLogic.SetNextPlayer();
             }
@@ -57,11 +117,27 @@ namespace TicTacToe
                 if(track is Button)
                 {
                     ((Button)track).Content = String.Empty;
+                    ((Button)track).Background = Brushes.Black;
                 }
             }
             Array.Clear(gameLogic.Board, 0,9);
             WinScreen.Visibility = Visibility.Collapsed;
             gameLogic.CurrentPlayer = "X";
+        }
+
+        private void BtnBotEnable_Click(object sender, RoutedEventArgs e)
+        {
+            if (botEnable == true) botEnable = false;
+            botEnable = true;
+        }
+
+        private void BtnTeam_Click(object sender, RoutedEventArgs e)
+        {
+            var btnTeam = (Button)sender;
+
+            gameLogic.SetNextPlayer();
+
+            btnTeam.Content = gameLogic.CurrentPlayer;
         }
     }
 }

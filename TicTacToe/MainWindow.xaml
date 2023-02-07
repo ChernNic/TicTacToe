@@ -5,21 +5,39 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:TicTacToe"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="TicTacToe" Height="600" Width="500">
     <Window.Resources>
+
         <Style TargetType="{x:Type Button}">
             <Setter Property="Margin" Value= "5"/>
-            <Setter Property="FontSize" Value= "48"/>
+            <Setter Property="FontSize" Value= "68"/>
+            <Setter Property="FontWeight" Value= "Bold"/>
             <EventSetter Event="Click" Handler="PlayerClicksSpace"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Black"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="Black"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid Background="Black">
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="100"/>
         </Grid.RowDefinitions>
 
-        <Grid  x:Name="gameField">
+        <Grid Background="White" x:Name="gameField">
             <Grid.RowDefinitions>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="*"/>
@@ -30,7 +48,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            
+
             <Button Tag="0,0" Grid.Column="0"/>
             <Button Tag="0,1" Grid.Column="1"/>
             <Button Tag="0,2" Grid.Column="2"/>
@@ -42,11 +60,19 @@
             <Button Tag="2,0" Grid.Row="2"/>
             <Button Tag="2,1" Grid.Row="2" Grid.Column="1"/>
             <Button Tag="2,2" Grid.Row="2" Grid.Column="2"/>
-            
-        </Grid>
-       
-        <Button x:Name="BtnNewGame" Content="Новая Игра" HorizontalAlignment="Center"  Grid.Row="1" VerticalAlignment="Center" Click="BtnNewGame_Click"/>
 
-        <TextBlock x:Name="WinScreen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="56" FontWeight="Bold" Text="ИГРОК ПОБЕЖДАЕТ" Foreground="Red" Visibility="Collapsed"/>
+        </Grid>
+        <TextBlock x:Name="WinScreen" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="56" FontWeight="Bold" Text="ИГРОК ПОБЕЖДАЕТ" Background="White" Foreground="Red" Visibility="Collapsed"/>
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="100"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="100"/>
+            </Grid.ColumnDefinitions>
+            <Button  Grid.Column="1" FontSize="48" Background="White" Foreground="Black" x:Name="BtnNewGame" Content="Новая Игра" Click="BtnNewGame_Click" FontWeight="Light" />
+            <Button  Grid.Column="0" FontSize="48" Background="White" Foreground="Black" x:Name="BtnBotEnable" Content="БОТ" Click="BtnBotEnable_Click" FontWeight="Light"/>
+            <Button  Grid.Column="2"  FontSize="48" Background="White" Foreground="Black" x:Name="BtnTeam" Content="X" Click="BtnTeam_Click" FontWeight="Bold"/>
+        </Grid>
+
     </Grid>
 </Window>
