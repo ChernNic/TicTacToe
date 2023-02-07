@@ -120,6 +120,9 @@ namespace TicTacToe
                     ((Button)track).Background = Brushes.Black;
                 }
             }
+            BtnTeam.Content = "X";
+            BtnTeam.Background = Brushes.Red;
+
             Array.Clear(gameLogic.Board, 0,9);
             WinScreen.Visibility = Visibility.Collapsed;
             gameLogic.CurrentPlayer = "X";
@@ -138,6 +141,15 @@ namespace TicTacToe
             gameLogic.SetNextPlayer();
 
             btnTeam.Content = gameLogic.CurrentPlayer;
+
+            if (btnTeam.Content.ToString() == "X")
+            {
+                btnTeam.Background = Brushes.Red;
+            }
+            else
+            {
+                btnTeam.Background = Brushes.Blue;
+            }
         }
     }
 }

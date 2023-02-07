@@ -71,7 +71,7 @@
             </Grid.ColumnDefinitions>
             <Button  Grid.Column="1" FontSize="48" Background="White" Foreground="Black" x:Name="BtnNewGame" Content="Новая Игра" Click="BtnNewGame_Click" FontWeight="Light" />
             <Button  Grid.Column="0" FontSize="48" Background="White" Foreground="Black" x:Name="BtnBotEnable" Content="БОТ" Click="BtnBotEnable_Click" FontWeight="Light"/>
-            <Button  Grid.Column="2"  FontSize="48" Background="White" Foreground="Black" x:Name="BtnTeam" Content="X" Click="BtnTeam_Click" FontWeight="Bold"/>
+            <Button  Grid.Column="2"  FontSize="48" Background="Red" Foreground="White" x:Name="BtnTeam" Content="X" Click="BtnTeam_Click" FontWeight="Bold"/>
         </Grid>
 
     </Grid>
