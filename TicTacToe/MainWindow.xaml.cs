@@ -117,7 +117,7 @@ namespace TicTacToe
                 if(track is Button)
                 {
                     ((Button)track).Content = String.Empty;
-                    ((Button)track).Background = Brushes.Black;
+                    ((Button)track).Background = (SolidColorBrush)new BrushConverter().ConvertFrom("#272530");
                 }
             }
             BtnTeam.Content = "X";
@@ -130,8 +130,24 @@ namespace TicTacToe
 
         private void BtnBotEnable_Click(object sender, RoutedEventArgs e)
         {
-            if (botEnable == true) botEnable = false;
-            botEnable = true;
+            if (botEnable == true)
+            {
+                botEnable = false;
+            }
+            else
+            {
+                botEnable = true;
+            }
+            if (botEnable)
+            {
+                BtnBotEnable.Background = Brushes.Green;
+                BtnBotEnable.Foreground = Brushes.White;
+            }
+            else
+            {
+                BtnBotEnable.Background = Brushes.White;
+                BtnBotEnable.Foreground = Brushes.Black;
+            }
         }
 
         private void BtnTeam_Click(object sender, RoutedEventArgs e)
